@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "main.h" 
 
 /**
  * factorize - Factorizes an integer and prints the result.
@@ -20,12 +21,6 @@ void factorize(int number)
     }
 }
 
-/**
- * main - Reads integers from a file and attempts to factorize them.
- * @argc: The number of command-line arguments.
- * @argv: The array of command-line arguments.
- * Return: 0 on success, non-zero on failure.
- */
 int main(int argc, char *argv[])
 {
     char *file_path;
