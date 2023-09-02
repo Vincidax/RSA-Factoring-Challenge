@@ -7,17 +7,17 @@
  */
 void factorize(int number)
 {
-	int p, q;
+    int p, q;
 
-	for (p = 2; p <= number; ++p)
-	{
-		if (number % p == 0)
-		{
-			q = number / p;
-			printf("%d = %d * %d\n", number, p, q);
-			return;
-		}
-	}
+    for (p = 2; p <= number; ++p)
+    {
+        if (number % p == 0)
+        {
+            q = number / p;
+            printf("%d = %d * %d\n", number, p, q);
+            return;
+        }
+    }
 }
 
 /**
@@ -28,35 +28,39 @@ void factorize(int number)
  */
 int main(int argc, char *argv[])
 {
-	char *file_path;
-	FILE *file;
-	char line[256]; /* Assuming lines in the file are not longer than 255 chars */
+    char *file_path;
+    FILE *file;
+    char line[256]; /* Assuming lines in the file are not longer than 255 characters */
 
-	if (argc != 2)
-	{
-		fprintf(stderr, "Usage: %s <file>\n", argv[0]);
-		return (1);
-	}
-	file_path = argv[1];
-	file = fopen(file_path, "r");
+    if (argc != 2)
+    {
+        fprintf(stderr, "Usage: %s <file>\n", argv[0]);
+        return 1;
+    }
 
-	if (file == NULL)
-	{
-		fprintf(stderr, "File '%s' not found.\n", file_path);
-		return (1);
-	}
+    file_path = argv[1];
+    file = fopen(file_path, "r");
 
-	while (fgets(line, sizeof(line), file))
-	{
-		int num = atoi(line);
+    if (file == NULL)
+    {
+        fprintf(stderr, "File '%s' not found.\n", file_path);
+        return 1;
+    }
 
-		if (num <= 1)
-		{
-			fprintf(stderr, "Invalid number in the file: %d\n", num);
-			continue;
-		}
-		factorize(num);
-	}
-	fclose(file);
-	return (0);
+    while (fgets(line, sizeof(line), file))
+    {
+        int num = atoi(line);
+
+        if (num <= 1)
+        {
+            fprintf(stderr, "Invalid number in the file: %d\n", num);
+            continue;
+        }
+
+        factorize(num);
+    }
+
+    fclose(file);
+    return 0;
 }
+
