@@ -3,6 +3,7 @@
 import time
 import sys
 
+
 def factorize(number):
     """
     Factorize a number into two smaller numbers.
@@ -12,6 +13,7 @@ def factorize(number):
             q = number // p
             return p, q
     return None, None
+
 
 def main():
     # Check if the correct number of command-line arguments is provided
@@ -50,6 +52,7 @@ def main():
 
     except FileNotFoundError:
         print(f"File '{file_path}' not found.")
+
 
 if __name__ == '__main__':
     main()
