@@ -1,19 +1,17 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 
 import time
 import sys
-
 
 def factorize(number):
     """
     Factorize a number into two smaller numbers.
     """
-    for p in range(2, number):
+    for p in range(2, number + 1):
         if number % p == 0:
             q = number // p
             return p, q
     return None, None
-
 
 def main():
     # Check if the correct number of command-line arguments is provided
@@ -41,7 +39,7 @@ def main():
 
             if p is not None and q is not None:
                 # Print the factorization in the required format
-                print(f"{num} = {p} * {q}")
+                print(f"{num}={p}*{q}")
             else:
                 # If unable to factorize, print a message
                 print(f"Unable to factorize {num}")
@@ -52,7 +50,6 @@ def main():
 
     except FileNotFoundError:
         print(f"File '{file_path}' not found.")
-
 
 if __name__ == '__main__':
     main()
