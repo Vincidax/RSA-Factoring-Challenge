@@ -1,5 +1,0 @@
-./run_factors.sh: line 7: ./factors.py: No such file or directory
-
-real	0m0.000s
-user	0m0.001s
-sys	0m0.000s
