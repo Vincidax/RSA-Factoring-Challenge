@@ -1,6 +1,19 @@
 #ifndef MAIN_H
 #define MAIN_H
 
+#include <time.h>
+
+#define MAX_LINE_LENGTH 100
+
+/**
+ * main - Entry point of the program.
+ * @argc: The number of command-line arguments.
+ * @argv: An array of strings containing the command-line arguments.
+ *
+ * Return: 0 on success, 1 on failure.
+ */
+int main(int argc, char *argv[]);
+
 /**
  * processFile - Process a file containing natural numbers to factor.
  * @filename: The name of the file to process.
