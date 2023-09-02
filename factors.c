@@ -1,61 +1,83 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "main.h" 
+#include <string.h>
+#include <time.h>
 
-/**
- * factorize - Factorizes an integer and prints the result.
- * @number: The integer to factorize.
- */
-void factorize(int number)
-{
-    int p, q;
+#include "main.h"
 
-    for (p = 2; p <= number; ++p)
-    {
-        if (number % p == 0)
-        {
-            q = number / p;
-            printf("%d = %d * %d\n", number, p, q);
-            return;
-        }
-    }
-}
+#define MAX_LINE_LENGTH 100
 
-int main(int argc, char *argv[])
-{
-    char *file_path;
+int main(int argc, char *argv[]) {
     FILE *file;
-    char line[256]; /* Assuming lines in the file are not longer than 255 characters */
+    char line[MAX_LINE_LENGTH];
+    clock_t start_time;
+    unsigned long number; /* Declare the variable here */
 
-    if (argc != 2)
-    {
+    if (argc != 2) {
         fprintf(stderr, "Usage: %s <file>\n", argv[0]);
-        return 1;
+        return EXIT_FAILURE;
     }
 
-    file_path = argv[1];
-    file = fopen(file_path, "r");
-
-    if (file == NULL)
-    {
-        fprintf(stderr, "File '%s' not found.\n", file_path);
-        return 1;
+    file = fopen(argv[1], "r");
+    if (file == NULL) {
+        perror("Error opening file");
+        return EXIT_FAILURE;
     }
 
-    while (fgets(line, sizeof(line), file))
-    {
-        int num = atoi(line);
+    start_time = clock();
 
-        if (num <= 1)
-        {
-            fprintf(stderr, "Invalid number in the file: %d\n", num);
+    while (fgets(line, sizeof(line), file) != NULL) {
+        /* Remove trailing newline characters */
+        size_t len = strlen(line);
+        if (len > 0 && line[len - 1] == '\n') {
+            line[len - 1] = '\0';
+        }
+
+        number = strtoul(line, NULL, 10); /* Assign the value here */
+        if (number == 0) {
+            fprintf(stderr, "Invalid number in the file: %s\n", line);
             continue;
         }
 
-        factorize(num);
+        factorize(number);
+
+        /* Check for time limit */
+        if (isTimeLimitExceeded(start_time, 5)) {
+            printf("Time limit exceeded\n");
+            break;
+        }
     }
 
     fclose(file);
-    return 0;
+    return EXIT_SUCCESS;
+}
+
+/**
+ * factorize - Factorize a number into two smaller numbers.
+ * @n: The number to factorize.
+ */
+void factorize(unsigned long n) {
+    unsigned long p = 2;
+
+    while (p <= n / 2) {
+        if (n % p == 0) {
+            printf("%lu=%lu*%lu\n", n, p, n / p);
+            return;
+        }
+        p++;
+    }
+
+    printf("%lu=%lu*1\n", n, n);
+}
+
+/**
+ * isTimeLimitExceeded - Check if the time limit is exceeded.
+ * @start_time: The start time of execution.
+ * @time_limit: The time limit in seconds.
+ *
+ * Return: 1 if the time limit is exceeded, 0 otherwise.
+ */
+int isTimeLimitExceeded(clock_t start_time, int time_limit) {
+    return (clock() - start_time) >= (time_limit * CLOCKS_PER_SEC);
 }
 
