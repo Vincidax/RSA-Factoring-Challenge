@@ -1,53 +1,54 @@
 #!/usr/bin/env python3
 
 import time
-import math
 import sys
 
 
-def pollard_rho(n):
-    if n % 2 == 0:
-        return 2
-
-    x = 2
-    y = 2
-    d = 1
-
-    def f(x):
-        return (x**2 + 1) % n
-
-    while d == 1:
-        x = f(x)
-        y = f(f(y))
-        d = math.gcd(abs(x - y), n)
-
-    return d
+def factorize(number):
+    """
+    Factorize a number into two smaller numbers.
+    """
+    for p in range(2, number):
+        if number % p == 0:
+            q = number // p
+            return p, q
+    return None, None
 
 
 def main():
+    # Check if the correct number of command-line arguments is provided
     if len(sys.argv) != 2:
-        print("Usage: python factorize.py <file>")
+        # Print the correct usage of the program
+        print("Usage: factors <file>")
+        # Exit the program if the correct arguments are not provided
         return
 
+    # Get the file path from the command-line argument
     file_path = sys.argv[1]
+
+    # Start timing
     start_time = time.time()
 
     try:
+        # Open the file in read mode
         with open(file_path, 'r') as file:
             numbers = file.readlines()
 
+        # Iterate through each number in the list
         for number in numbers:
             num = int(number.strip())
-            factor = pollard_rho(num)
+            p, q = factorize(num)
 
-            if factor == num:
-                print(f"{num} is prime.")
+            if p is not None and q is not None:
+                # Print the factorization in the required format
+                print(f"{num} = {p} * {q}")
             else:
-                print(f"{num}={factor}*{num // factor}")
+                # If unable to factorize, print a message
+                print(f"Unable to factorize {num}")
 
-        if time.time() - start_time > 5:
-            print("Time limit exceeded")
-            exit()
+            if time.time() - start_time > 5:
+                print("Time limit exceeded")
+                exit()
 
     except FileNotFoundError:
         print(f"File '{file_path}' not found.")
