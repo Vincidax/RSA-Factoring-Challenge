@@ -1,0 +1,55 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+/**
+ * factorize - Factorizes an integer and prints its prime factors.
+ * @number: The integer to factorize.
+ */
+void factorize(int number)
+{
+    int p, q;
+
+    for (p = 2; p <= number; ++p)
+    {
+        if (number % p == 0)
+        {
+            q = number / p;
+            printf("%d = %d * %d\n", number, p, q);
+            return;
+        }
+    }
+    printf("Unable to factorize %d\n", number);
+}
+
+int main(int argc, char *argv[])
+{
+    char *file_path;
+    FILE *file;
+    char line[256]; /* Assuming lines in the file are not longer than 255 characters */
+
+    if (argc != 2)
+    {
+        fprintf(stderr, "Usage: %s <file>\n", argv[0]);
+        return 1;
+    }
+
+    file_path = argv[1];
+    file = fopen(file_path, "r");
+
+    if (file == NULL)
+    {
+        fprintf(stderr, "File '%s' not found.\n", file_path);
+        return 1;
+    }
+
+    while (fgets(line, sizeof(line), file))
+    {
+        int num = atoi(line);
+
+        factorize(num);
+    }
+
+    fclose(file);
+    return 0;
+}
