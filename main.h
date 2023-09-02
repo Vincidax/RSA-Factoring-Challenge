@@ -15,30 +15,22 @@
 int main(int argc, char *argv[]);
 
 /**
- * processFile - Process a file containing natural numbers to factor.
- * @filename: The name of the file to process.
+ * processFile - Process the input file and factorize numbers.
+ * @filename: The name of the input file.
  */
 void processFile(const char *filename);
-
-/**
- * removeNewline - Remove trailing newline characters from a string.
- * @str: The string to modify.
- */
-void removeNewline(char *str);
-
-/**
- * getNumberFromString - Convert a string to an unsigned long integer.
- * @str: The string to convert.
- *
- * Return: The converted number.
- */
-unsigned long getNumberFromString(const char *str);
 
 /**
  * factorize - Factorize a number into two smaller numbers.
  * @n: The number to factorize.
  */
 void factorize(unsigned long n);
+
+/**
+ * removeNewline - Remove trailing newline characters from a string.
+ * @str: The string to modify.
+ */
+void removeNewline(char *str);
 
 /**
  * isTimeLimitExceeded - Check if the time limit is exceeded.
